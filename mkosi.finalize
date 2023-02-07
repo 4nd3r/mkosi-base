@@ -1,0 +1,45 @@
+#!/bin/sh -e
+
+if [ "$1" != 'final' ]
+then
+    exit 0
+fi
+
+if [ -z "$SUDO_UID" ] || [ -z "$SUDO_GID" ] || [ -z "$SUDO_USER" ]
+then
+    echo ':-(' >&2
+    exit 1
+fi
+
+_HOME="$( awk -v user="$SUDO_USER" -F: '$1 == user {print $6}' /etc/passwd )"
+
+_PASSWORD="$( awk -v user="$SUDO_USER" -F: '$1 == user {print $2}' /etc/shadow )"
+
+_KEYS="$_HOME/.ssh/authorized_keys"
+
+chroot "$BUILDROOT" useradd \
+    --uid "$SUDO_UID" \
+    --gid "$SUDO_GID" \
+    --password "$_PASSWORD" \
+    --groups sudo,docker \
+    --create-home \
+    --home-dir "$_HOME" \
+    --shell /bin/bash \
+    "$SUDO_USER"
+
+chroot "$BUILDROOT" mkdir -p /root/.ssh "$_HOME/.ssh"
+
+cat "$_KEYS" | chroot "$BUILDROOT" tee /root/.ssh/authorized_keys > /dev/null
+
+cat "$_KEYS" | chroot "$BUILDROOT" tee "$_KEYS" > /dev/null
+
+chroot "$BUILDROOT" chown -R "$SUDO_UID:$SUDO_GID" "$_HOME"
+
+cat > mkosi.output/image.nspawn << EOF
+[Files]
+BindReadOnly=$_HOME/Desktop
+
+[Exec]
+PrivateUsers=no
+SystemCallFilter=add_key keyctl bpf
+EOF
