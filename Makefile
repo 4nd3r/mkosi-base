@@ -1,41 +1,30 @@
-.PHONY: make build clean install uninstall
+.PHONY: build uidcheck clean install uninstall
 
-NAME?=docker
-
-make: build install
+_HOST?=docker
+_UID?=$(shell id -u)
+_USER?=$(USER)
+_GID?=$(shell id -g)
+_GROUP?=$(shell id -gn)
+_HOME?=$(HOME)
 
 build:
-	sudo mkosi build
+	mkdir -p mkosi.cache mkosi.output mkosi.workspace
+	PATH="/usr/sbin:$(PATH)" _UID="$(_UID)" _USER="$(_USER)" _GID="$(_GID)" _GROUP="$(_GROUP)" _HOME="$(_HOME)" mkosi -f build
 
-clean:
-	sudo mkosi clean
-	sudo find \
-		./mkosi.workspace/ \
-		./mkosi.cache/ \
-		./mkosi.output/ \
-		-mindepth 1 \
-		-not -name .gitignore \
-		-delete
+uidcheck:
+	@if [ "$(_UID)" != 0 ]; then echo 'use sudo'; exit 1; fi
 
-install:
-	sudo mkdir -p \
-		/etc/systemd/nspawn \
-		/var/lib/machines
-	sudo mv \
-		./mkosi.output/debian~sid/image \
-		/var/lib/machines/${NAME}
-	sudo mv \
-		./mkosi.output/image.nspawn \
-		/etc/systemd/nspawn/${NAME}.nspawn
-	sudo machinectl start ${NAME}
+clean: uidcheck
+	rm -rf mkosi.cache mkosi.output mkosi.workspace
 
-uninstall:
-	sudo machinectl terminate ${NAME} || true
-	sleep 3
-	sudo machinectl remove ${NAME} || true
-	sudo rm -rf \
-		/var/lib/machines/${NAME} \
-		/etc/systemd/nspawn/${NAME}.nspawn
-	sudo rmdir --ignore-fail-on-non-empty \
-		/etc/systemd/nspawn \
-		/var/lib/machines
+install: uidcheck
+	mkdir -p /etc/systemd/nspawn /var/lib/machines
+	machinectl import-tar mkosi.output/debian~sid/image.tar.xz $(_HOST)
+	cp mkosi.output/image.nspawn /etc/systemd/nspawn/$(_HOST).nspawn
+	machinectl start $(_HOST)
+
+uninstall: uidcheck
+	if machinectl status $(_HOST) > /dev/null 2>&1; then machinectl terminate $(_HOST); sleep 3; fi
+	if machinectl image-status $(_HOST) > /dev/null 2>&1; then machinectl remove $(_HOST); fi
+	rm -f /etc/systemd/nspawn/$(_HOST).nspawn
+	rmdir --ignore-fail-on-non-empty /etc/systemd/nspawn /var/lib/machines

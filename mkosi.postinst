@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+if [ "$1" != 'final' ]
+then
+    exit 0
+fi
+
+systemctl enable systemd-networkd.service
+
+if ! grep -Eq "^$_GROUP:" /etc/group
+then
+    groupadd --gid "$_GID" "$_GROUP"
+fi
+
+useradd \
+    --uid "$_UID" \
+    --gid "$_GID" \
+    --create-home \
+    --home-dir "$_HOME" \
+    --shell /bin/bash \
+    --groups sudo \
+    "$_USER"
