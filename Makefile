@@ -19,7 +19,7 @@ clean: uidcheck
 
 install: uidcheck
 	mkdir -p /etc/systemd/nspawn /var/lib/machines
-	machinectl import-tar mkosi.output/debian~sid/image.tar.xz $(_HOST)
+	machinectl import-tar mkosi.output/debian~sid/image.tar $(_HOST)
 	cp mkosi.output/image.nspawn /etc/systemd/nspawn/$(_HOST).nspawn
 	machinectl start $(_HOST)
 
