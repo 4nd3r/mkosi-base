@@ -18,5 +18,5 @@ useradd \
     --create-home \
     --home-dir "$_HOME" \
     --shell /bin/bash \
-    --groups sudo \
+    --groups docker \
     "$_USER"
