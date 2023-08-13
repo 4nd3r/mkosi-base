@@ -1,13 +1,9 @@
 #!/bin/sh -e
 
-if [ "$1" != 'final' ]
-then
-    exit 0
-fi
-
 cat > mkosi.output/image.nspawn << EOF
 [Files]
 BindReadOnly=$_HOME/Desktop
+BindReadOnly=$_HOME/Downloads
 
 [Exec]
 PrivateUsers=no

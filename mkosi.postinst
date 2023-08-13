@@ -1,11 +1,9 @@
 #!/bin/sh -e
 
-if [ "$1" != 'final' ]
+if [ "$container" != "mkosi" ]
 then
-    exit 0
+    exec mkosi-chroot "$SCRIPT" "$@"
 fi
-
-systemctl enable systemd-networkd.service
 
 if ! grep -Eq "^$_GROUP:" /etc/group
 then
