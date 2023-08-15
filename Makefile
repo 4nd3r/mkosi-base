@@ -1,6 +1,6 @@
 .PHONY: build uidcheck clean install uninstall reinstall
 
-_HOST?=ctools
+_HOST?=tools
 _UID?=$(shell id -u)
 _USER?=$(USER)
 _GID?=$(shell id -g)

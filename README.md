@@ -1,6 +1,8 @@
-# nspawn image with container tools
+# nspawn image with development tools
 
-This is [`mkosi`](https://github.com/systemd/mkosi) configuration to build an image containing various tools for container building.
+This is [`mkosi`](https://github.com/systemd/mkosi) configuration to build an
+image containing development tools which I use daily, but don't want to pollute
+my system with due to various reasons.
 
 Built image is compatible with [`nspawn`](https://www.freedesktop.org/software/systemd/man/systemd-nspawn.html).
 
@@ -11,5 +13,5 @@ Works for me on [Debian Sid](https://wiki.debian.org/DebianUnstable) and (usuall
 ```
 make
 sudo make install
-machinectl shell $USER@ctools
+machinectl shell $USER@tools
 ```
