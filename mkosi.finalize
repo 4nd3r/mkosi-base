@@ -2,8 +2,9 @@
 
 cat > mkosi.output/image.nspawn << EOF
 [Files]
-BindReadOnly=$_HOME/Desktop
-BindReadOnly=$_HOME/Downloads
+Bind=$_HOME/Desktop
+Bind=$_HOME/Documents
+Bind=$_HOME/Downloads
 
 [Exec]
 PrivateUsers=no
