@@ -18,3 +18,12 @@ useradd \
     --shell /bin/bash \
     --groups docker \
     "$_USER"
+
+git clone https://github.com/asdf-vm/asdf.git "$_HOME/.asdf"
+
+chown -R "$_UID:$_GID" "$_HOME/.asdf"
+
+cat >> "$_HOME/.bashrc" << EOF
+. "\$HOME/.asdf/asdf.sh"
+. "\$HOME/.asdf/completions/asdf.bash"
+EOF
