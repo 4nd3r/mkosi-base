@@ -1,8 +1,8 @@
 # nspawn image with development tools
 
-This is [`mkosi`](https://github.com/systemd/mkosi) configuration to build an
-image containing development tools which I use daily, but don't want to pollute
-my system with due to various reasons.
+This is [`mkosi`](https://github.com/systemd/mkosi) configuration for building
+an image containing development tools that I use daily but don't want to
+clutter my system with due to various reasons.
 
 Built image is compatible with [`nspawn`](https://www.freedesktop.org/software/systemd/man/systemd-nspawn.html).
 
