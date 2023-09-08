@@ -7,8 +7,7 @@ clutter my system with due to various reasons.
 Built image is compatible with [`nspawn`](https://www.freedesktop.org/software/systemd/man/systemd-nspawn.html).
 
 Works for me on [Debian Sid](https://wiki.debian.org/DebianUnstable)
-and (usually) with bleeding edge
-[`mkosi`](https://github.com/systemd/mkosi/commit/19bb5e274d9a9c23891905c4bcbb8f68955a701d).
+and (usually) with bleeding edge [`mkosi`](https://github.com/systemd/mkosi).
 
 ## Usage
 
