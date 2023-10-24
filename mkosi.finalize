@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-cat > mkosi.output/image.nspawn << EOF
+cat > "$OUTPUTDIR/$IMAGE_ID.nspawn" << EOF
 [Files]
 Bind=$_HOME/Desktop
 Bind=$_HOME/Documents

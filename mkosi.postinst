@@ -16,14 +16,5 @@ useradd \
     --create-home \
     --home-dir "$_HOME" \
     --shell /bin/bash \
-    --groups docker \
+    --groups sudo \
     "$_USER"
-
-git clone https://github.com/asdf-vm/asdf.git "$_HOME/.asdf"
-
-chown -R "$_UID:$_GID" "$_HOME/.asdf"
-
-cat >> "$_HOME/.bashrc" << EOF
-. "\$HOME/.asdf/asdf.sh"
-. "\$HOME/.asdf/completions/asdf.bash"
-EOF
