@@ -2,37 +2,37 @@
 
 NAME?=tools
 
-_UID?=$(shell id -u)
-_USER?=$(USER)
-_GID?=$(shell id -g)
-_GROUP?=$(shell id -gn)
-_HOME?=$(HOME)
+_UID=$(shell id -u)
+_USER=$(USER)
+_GID=$(shell id -g)
+_GROUP=$(shell id -gn)
+_HOME=$(HOME)
 
-_OUTPUT_DIR=mkosi.output
 _WORKSPACE_DIR=mkosi.workspace
 _CACHE_DIR=mkosi.cache
-_IMAGE_SRC=$(_OUTPUT_DIR)/$(NAME).tar
+_OUTPUT_DIR=mkosi.output
 _MACHINES_DIR=/var/lib/machines
-
-_NSPAWN_SRC=$(_OUTPUT_DIR)/$(NAME).nspawn
 _NSPAWN_DIR=/etc/systemd/nspawn
-_NSPAWN_DST=$(_NSPAWN_DIR)/$(NAME).nspawn
-
-_SERVICE_SRC=$(_OUTPUT_DIR)/$(NAME).service
 _SERVICE_DIR=/etc/systemd/system/systemd-nspawn@$(NAME).service.d
+
+_IMAGE_SRC=$(_OUTPUT_DIR)/$(NAME).tar
+_NSPAWN_SRC=$(_OUTPUT_DIR)/$(NAME).nspawn
+_SERVICE_SRC=$(_OUTPUT_DIR)/$(NAME).service
+
+_NSPAWN_DST=$(_NSPAWN_DIR)/$(NAME).nspawn
 _SERVICE_DST=$(_SERVICE_DIR)/drop-in.conf
 
 build:
-	mkdir -p mkosi.output mkosi.workspace
-	if [ ! -e mkosi.cache ]; then mkdir mkosi.cache; fi
+	mkdir -p $(_WORKSPACE_DIR) $(_OUTPUT_DIR)
+	if [ ! -e $(_CACHE_DIR) ]; then mkdir $(_CACHE_DIR); fi
 	NAME="$(NAME)" _UID="$(_UID)" _USER="$(_USER)" _GID="$(_GID)" _GROUP="$(_GROUP)" _HOME="$(_HOME)" mkosi --image-id $(NAME) -f
 
 uidcheck:
 	@if [ "$(_UID)" != 0 ]; then echo 'use sudo'; exit 1; fi
 
 clean: uidcheck
-	rm -rf mkosi.output mkosi.workspace
-	if [ ! -L mkosi.cache ]; then rm -rf mkosi.cache; fi
+	rm -rf $(_WORKSPACE_DIR) $(_OUTPUT_DIR)
+	if [ ! -L $(_CACHE_DIR) ]; then rm -rf $(_CACHE_DIR); fi
 
 install: uidcheck
 	mkdir -p $(_MACHINES_DIR) $(_NSPAWN_DIR)
