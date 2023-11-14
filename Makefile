@@ -1,6 +1,6 @@
 .PHONY: build uidcheck clean install uninstall reinstall
 
-NAME?=tools
+NAME?=test
 
 _UID=$(shell id -u)
 _USER=$(USER)

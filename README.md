@@ -1,13 +1,10 @@
-# my nspawn images with different tools
+# my nspawn images
 
 This is [`mkosi`](https://github.com/systemd/mkosi) configuration for building
-different images containing various tools that I need, but don't want to
-clutter my system with due to various reasons.
-
-Images is compatible with [`nspawn`](https://www.freedesktop.org/software/systemd/man/systemd-nspawn.html).
-
-Works for me on [Debian Sid](https://wiki.debian.org/DebianUnstable)
-and (usually) with bleeding edge [`mkosi`](https://github.com/systemd/mkosi).
+[`nspawn`](https://www.freedesktop.org/software/systemd/man/systemd-nspawn.html)
+images containing tools that I need, but don't want to clutter my system with.
+Works for me on [Debian Sid](https://wiki.debian.org/DebianUnstable) and
+usually with bleeding edge [`mkosi`](https://github.com/systemd/mkosi).
 
 ## Usage
 

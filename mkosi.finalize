@@ -9,4 +9,7 @@ Bind=$_HOME/Downloads
 [Exec]
 PrivateUsers=no
 SystemCallFilter=add_key keyctl bpf
+
+[Network]
+Zone=nspawn
 EOF
