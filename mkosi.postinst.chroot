@@ -1,11 +1,6 @@
 #!/bin/sh -e
 
-if [ "$container" != 'mkosi' ]
-then
-    exec mkosi-chroot "$SCRIPT" "$@"
-fi
-
-if ! grep -Eq "^$_GROUP:" /etc/group
+if ! getent group "$_GROUP" > /dev/null
 then
     groupadd --gid "$_GID" "$_GROUP"
 fi

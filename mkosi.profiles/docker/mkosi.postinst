@@ -1,8 +1,0 @@
-#!/bin/sh -e
-
-if [ "$container" != 'mkosi' ]
-then
-    exec mkosi-chroot "$SCRIPT" "$@"
-fi
-
-usermod -a -G docker "$_USER"
