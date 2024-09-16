@@ -45,6 +45,7 @@ _nspawn()
 
     echo ''
     echo '[Exec]'
+    echo 'SystemCallFilter=add_key keyctl'
     echo 'PrivateUsers=no'
 }
 
