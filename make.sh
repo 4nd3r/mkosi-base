@@ -26,12 +26,10 @@ _nspawn()
     echo '[Files]'
 
     for _ in \
-        "Bind=$_HOME/.kube" \
         "Bind=$_HOME/Desktop" \
         "Bind=$_HOME/Downloads" \
         "Bind=$_HOME/Repos" \
-        "BindReadOnly=$_HOME/.tmux.conf" \
-        "BindReadOnly=$_HOME/Documents"
+        "BindReadOnly=$_HOME/.tmux.conf"
     do
         if [ -e "$( echo "$_" | cut -d= -f2 | sed 's/:.*//' )" ]
         then
