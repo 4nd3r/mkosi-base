@@ -1,7 +1,7 @@
 .PHONY: build image nspawn service install uninstall reinstall
 
 NAME?=dev
-PROFILE?=sid
+PROFILE?=bookworm
 
 build: image nspawn service
 
