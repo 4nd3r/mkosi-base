@@ -29,6 +29,7 @@ _nspawn()
         "Bind=$_HOME/Desktop" \
         "Bind=$_HOME/Downloads" \
         "Bind=$_HOME/Repos" \
+        "BindReadOnly=$_HOME/.kube" \
         "BindReadOnly=$_HOME/.tmux.conf"
     do
         if [ -e "$( echo "$_" | cut -d= -f2 | sed 's/:.*//' )" ]

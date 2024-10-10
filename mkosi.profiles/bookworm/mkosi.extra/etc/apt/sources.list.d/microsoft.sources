@@ -1,0 +1,13 @@
+Types: deb
+URIs: https://packages.microsoft.com/debian/12/prod
+Suites: bookworm
+Components: main
+Architectures: amd64
+Signed-by: /etc/apt/keyrings/microsoft.gpg
+
+Types: deb
+URIs: https://packages.microsoft.com/debian/11/prod
+Suites: bullseye
+Components: main
+Architectures: amd64
+Signed-by: /etc/apt/keyrings/microsoft.gpg
