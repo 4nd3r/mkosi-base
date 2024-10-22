@@ -45,7 +45,7 @@ _nspawn()
     echo ''
     echo '[Exec]'
     echo 'SystemCallFilter=add_key keyctl bpf'
-    echo 'PrivateUsers=identity'
+    echo 'PrivateUsers=no'
 }
 
 _service()
